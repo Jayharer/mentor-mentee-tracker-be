@@ -3,6 +3,8 @@ const mongoose = require("mongoose")
 var cors = require('cors')
 
 const userRoutes = require("./src/api/userRroutes")
+const adminRoutes = require("./src/api/adminRoutes")
+const mentorRoutes = require("./src/api/mentorRoutes")
 
 const app = express()
 app.use(express.json());
@@ -21,7 +23,10 @@ db.once("open", function () {
     app.listen(5000, () => {
         console.log("Server is running at port 5000");
     });
+
     app.use(userRoutes)
+    app.use(adminRoutes)
+    app.use(mentorRoutes)
 
 });
 

@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     },
     roll: {
         type: String,
-        default: 0,
+        default: "mentee",
     }
 });
 
