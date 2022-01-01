@@ -4,7 +4,7 @@ const TeamModel = require("../model/teamModels")
 const MentorModel = require("../model/mentorModels")
 const MentorProfileModel = require("../model/mentorProfileModel")
 
-const router = express.Router()
+const router = express.Router();
 
 router.post("/api/mentor/createsession", async (req, res) => {
     try {
@@ -31,8 +31,18 @@ router.get("/api/mentor/allsessions/:mid", async (req, res) => {
 //update session
 router.post("/api/mentor/updatesession/:id", async (req, res) => {
     try {
-        const filter = { id: req.params.id };
-        await SessionModel.findOneAndUpdate(filter, res.body)
+        const filter = { _id: req.params.id };
+        const result = await SessionModel.updateOne(filter, { $set: req.body })
+        res.send(result)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+//get session
+router.get("/api/mentor/getsession/:id", async (req, res) => {
+    try {
+        const filter = { _id: req.params.id };
         const session = await SessionModel.findOne(filter);
         res.send(session)
     } catch (error) {
@@ -62,22 +72,21 @@ router.get("/api/mentor/:uid", async (req, res) => {
     }
 })
 
-//update mentor profile
-router.post("/api/mentor/updatprofile/:uid", async (req, res) => {
+// update mentor profile
+router.post("/api/mentor/updatprofile/:id", async (req, res) => {
     try {
-        const filter = { uid : req.params.uid };
-        await MentorModel.findOneAndUpdate(filter, res.body)
-        const mentor = await MentorModel.findOne(filter);
-        res.send(mentor)
+        const filter = { _id: req.params.id };
+        const result = await MentorProfileModel.updateOne(filter, { $set: req.body })
+        res.send(result)
     } catch (error) {
         res.status(500).send(error)
     }
 })
 
-// mentor profile
+// get mentor profile
 router.get("/api/mentor/profile/:uid", async (req, res) => {
     try {
-        const uid = req.params['uid']
+        const uid = req.params['uid'];
         const mentor = await MentorProfileModel.find({ uid: uid })
         res.send(mentor)
     } catch (error) {
@@ -85,5 +94,15 @@ router.get("/api/mentor/profile/:uid", async (req, res) => {
     }
 })
 
+// dashboard
+router.get("/api/mentor/barchart/:uid", async (req, res) => {
+    try {
+        const uid = req.params['uid'];
+        const sessions = await SessionModel.find({ mentorid: uid })
+        res.send(sessions)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 module.exports = router;

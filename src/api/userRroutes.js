@@ -14,9 +14,11 @@ router.post("/api/user/adduser", async (req, res) => {
     }
 })
 
-router.get("/api/getuser", async (req, res) => {
+router.get("/api/user/getuser/:uid", async (req, res) => {
     try {
-
+        const uid = req.params['uid']
+        const user = await UserModel.findOne({ uid : uid});
+        res.send(user)
     } catch (error) {
         res.status(500).send(error);
     }
