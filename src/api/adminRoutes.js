@@ -2,7 +2,6 @@ const express = require("express")
 const BatchModel = require("../model/batchModels")
 const TeamModel = require("../model/teamModels")
 const MenteeModel = require("../model/menteeModels")
-const MentorModel = require("../model/mentorModels")
 const SessionModel = require("../model/sessionModels");
 const MentorProfileModel = require("../model/mentorProfileModel");
 
@@ -82,7 +81,6 @@ router.post("/api/admin/creatementee", async (req, res) => {
 // Mentor
 router.get("/api/admin/allmentors", async (req, res) => {
     try {
-        // const mentors = await MentorModel.find();
         const mentors = await MentorProfileModel.find();
         res.send(mentors)
     } catch (error) {
@@ -93,7 +91,7 @@ router.get("/api/admin/allmentors", async (req, res) => {
 router.get("/api/admin/getmentor/:uid", async (req, res) => {
     try {
         const uid = req.params['uid']
-        const mentors = await MentorModel.findOne({ uid: uid });
+        const mentors = await MentorProfileModel.findOne({ uid: uid });
         res.send(mentors)
     } catch (error) {
         res.status(500).send(error)
@@ -102,7 +100,7 @@ router.get("/api/admin/getmentor/:uid", async (req, res) => {
 
 router.post("/api/admin/creatementor", async (req, res) => {
     try {
-        const mentor = new MentorModel(req.body)
+        const mentor = new MentorProfileModel(req.body)
         await mentor.save()
         res.send(mentor)
     } catch (error) {

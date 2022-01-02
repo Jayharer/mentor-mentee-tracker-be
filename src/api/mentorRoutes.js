@@ -1,7 +1,6 @@
 const express = require("express")
 const SessionModel = require("../model/sessionModels")
 const TeamModel = require("../model/teamModels")
-const MentorModel = require("../model/mentorModels")
 const MentorProfileModel = require("../model/mentorProfileModel")
 
 const router = express.Router();
@@ -65,7 +64,7 @@ router.get("/api/mentor/allteams/:mentor", async (req, res) => {
 router.get("/api/mentor/:uid", async (req, res) => {
     try {
         const uid = req.params['uid']
-        const mentor = await MentorModel.find({ uid: uid })
+        const mentor = await MentorProfileModel.find({ uid: uid })
         res.send(mentor)
     } catch (error) {
         res.status(500).send(error)
