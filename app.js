@@ -19,9 +19,10 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
     console.log("Connected successfully");
-    //listen on port 5000
-    app.listen(5000, () => {
-        console.log("Server is running at port 5000");
+    var server_port = process.env.PORT || 80;
+    var server_host = process.env.YOUR_HOST || '0.0.0.0';
+    app.listen(server_port, server_host, () => {
+        console.log("Server is running at port ", server_port);
     });
 
     app.use(userRoutes)
