@@ -83,7 +83,6 @@ We tried to use a completely modern tech stack while testing out some new techno
 # Authors
 
 - [Jay Harer](https://github.com/Jayharer)
-- [Rajan Gupta](https://github.com/rajankouzina)
 
 <br/>
 
